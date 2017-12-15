@@ -24,7 +24,7 @@ func CleanPath(path string) string {
 		}
 	}
 	// http://stackoverflow.com/questions/17609732/expand-tilde-to-home-directory
-	if path[:2] == "~/" {
+	if strings.HasPrefix(path, "~/") {
 		usr, _ := user.Current()
 		dir := usr.HomeDir
 		path = strings.Replace(path, "~/", dir+"/", 1)

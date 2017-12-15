@@ -6,13 +6,19 @@ import (
 	"os"
 	"os/user"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
 func TestCleanPath(t *testing.T) {
+	cwd, _ := os.Getwd()
+	splitted := strings.Split(cwd, "/")
+	parentDirPath := strings.Join(splitted[:len(splitted)-1], "/")
 	m := map[string]string{
 		"/home/user/../bob/.password-store": "/home/bob/.password-store",
 		"/home/user//.password-store":       "/home/user/.password-store",
+		".":  cwd,
+		"..": parentDirPath,
 	}
 	usr, err := user.Current()
 	if err == nil {
